@@ -18,7 +18,7 @@
 	  <link rel="stylesheet" href="../css/customize.css">
 </head>
 
-<body onload="w3_show_nav('menuUsuario')">
+<body onload="w3_show_nav('menuProduto')">
 	<!-- Inclui MENU.PHP  -->
 	<?php require '../geral/menu.php'; ?>
 	<?php require '../bd/conectaBD.php'; ?>
@@ -40,7 +40,7 @@
 				echo "</p> "
 				?>
 				<div class="w3-container w3-theme">
-					<h2>Exclusão de Usuário</h2>
+					<h2>Exclusão de Produto</h2>
 				</div>
 
 				<!-- Acesso ao BD-->
@@ -50,7 +50,7 @@
 				$conn = mysqli_connect($servername, $username, $password, $database);
 
 				// ID do registro a ser excluído
-				$id_usuario = $_POST['ID_Usuario'];
+				$id_produto = $_POST['ID_Produto'];
 
 				// Verifica conexão
 				if (!$conn) {
@@ -58,7 +58,7 @@
 				}
 
 				// Faz DELETE na Base de Dados
-				$sql = "DELETE FROM Usuario WHERE ID_Usuario = $id_usuario";
+				$sql = "DELETE FROM Produto WHERE ID_Produto = $id_produto";
 
 				echo "<div class='w3-responsive w3-card-4'>";
 				if ($result = mysqli_query($conn, $sql)) {

@@ -56,7 +56,10 @@
 				mysqli_query($conn, 'SET character_set_results=utf8');
 
 				// Faz Select na Base de Dados
-				$sql = "SELECT ID_Produto, Nome, Descricao, Preco, Estoque, Codigo_Barras, ID_Categoria FROM Produto WHERE ID_Produto = $id_produto";
+				$sql = "SELECT Produto.ID_Produto, Produto.Nome, Produto.Descricao, Produto.Preco, Produto.Estoque, Produto.Codigo_Barras, Produto.ID_Categoria, Categoria.Nome_Categoria AS Nome_Categoria
+        				FROM Produto
+       					JOIN Categoria ON Produto.ID_Categoria = Categoria.ID_Categoria
+						WHERE Produto.ID_Produto = $id_produto";
 
 				//Inicio DIV form
 				echo "<div class='w3-responsive w3-card-4'>";
@@ -70,7 +73,7 @@
 						$estoque = $row['Estoque'];
 						$codigo_barras = $row['Codigo_Barras'];
 						$id_categoria = $row['ID_Categoria'];
-						$nome_categoria = "";
+						$nome_categoria = $row['Nome_Categoria']; // Nome da categoria atual
 				?>
 						<div class="w3-container w3-theme">
 							<h2>Altere os dados do Produto Cód. = [<?php echo $id_produto; ?>]</h2>
@@ -103,26 +106,19 @@
 										</p>
 										<p>
 											<label class="w3-text-IE"><b>Categoria</b>*</label>
-											<select class="w3-input w3-border w3-light-grey" name="Id_Categoria" required>
-												<!-- Exibe a categoria atual como a opção selecionada -->
+											<select class="w3-select w3-border w3-light-grey" name="Id_Categoria" required>
+												<!-- Categoria atual selecionada -->
 												<option value="<?php echo $id_categoria; ?>" selected><?php echo $nome_categoria; ?></option>
-
 												<?php
-												// Faz Select para obter todas as categorias
-												$sql = "SELECT ID_Categoria, Nome FROM Categoria";
-												$result = mysqli_query($conn, $sql);
-
-												if ($result && mysqli_num_rows($result) > 0) {
-													while ($row = mysqli_fetch_assoc($result)) {
-														$id_cat = $row["ID_Categoria"];
-														$nome_cat = $row["Nome_categoria"];
-
-														// Evita que a categoria atual seja duplicada na lista
-														if ($id_cat != $id_categoria) {
-															echo "<option value='$id_cat'>$nome_cat</option>";
-														}
+												// Seleciona as categorias
+												$sql = "SELECT * FROM Categoria";
+												$result = $conn->query($sql);
+												if ($result->num_rows > 0) {
+													while ($row = $result->fetch_assoc()) {
+														echo "<option value='" . $row['ID_Categoria'] . "'>" . $row['Nome_Categoria'] . "</option>";
 													}
 												}
+												$conn->close();
 												?>
 											</select>
 										</p>
@@ -132,7 +128,7 @@
 									<td colspan="2" style="text-align:center">
 										<p>
 											<input type="submit" value="Alterar" class="w3-btn w3-red">
-											<input type="button" value="Cancelar" class="w3-btn w3-theme" onclick="window.location.href='userListar.php'">
+											<input type="button" value="Cancelar" class="w3-btn w3-theme" onclick="window.location.href='productListar.php'">
 										</p>
 								</tr>
 							</table>
@@ -141,7 +137,7 @@
 					<?php
 					} else { ?>
 						<div class="w3-container w3-theme">
-							<h2>Usuário inexistente</h2>
+							<h2>Produto inexistente</h2>
 						</div>
 						<br>
 				<?php
