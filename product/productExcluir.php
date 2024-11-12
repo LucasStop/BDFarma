@@ -92,7 +92,7 @@
 							</p>
 							<p>
 								<input type="submit" value="Confirma exclusão?" class="w3-btn w3-red">
-								<input type="button" value="Cancelar" class="w3-btn w3-theme" onclick="window.location.href='userListar.php'">
+								<input type="button" value="Cancelar" class="w3-btn w3-theme" onclick="window.location.href='productListar.php'">
 							</p>
 						</form>
 					<?php

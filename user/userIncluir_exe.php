@@ -84,11 +84,11 @@
 			</div>
 
 
-			<?php require 'geral/sobre.php'; ?>
-			<!-- FIM PRINCIPAL -->
-		</div>
-		<!-- Inclui RODAPE.PHP  -->
-		<?php require 'geral/rodape.php'; ?>
+			<?php require '../geral/sobre.php'; ?>
+        <!-- FIM PRINCIPAL -->
+    </div>
+    <!-- Inclui RODAPE.PHP  -->
+    <?php require '../geral/rodape.php'; ?>
 
 </body>
 
